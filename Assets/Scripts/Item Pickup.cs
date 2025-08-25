@@ -2,29 +2,14 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
-    public Item item;
-    public int amount = 1;
+    public Item item; // ScriptableObject reference
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        Inventory inventory = other.GetComponent<Inventory>();
-        if (inventory != null)
+        if (other.CompareTag("Player"))
         {
-            if (inventory.AddItem(item, amount))
-            {
-                Destroy(gameObject);
-            }
+            Inventory.instance.Add(item);
+            Destroy(gameObject); // removes the 3D object from the world
         }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
